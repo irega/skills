@@ -1,4 +1,7 @@
 {
   "model": "haiku",
-  "effortLevel": "medium"
+  "effortLevel": "medium",
+  "hooks": {
+    "on-session-start": "/caveman"
+  }
 }

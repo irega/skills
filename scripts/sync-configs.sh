@@ -61,6 +61,63 @@ fi
 echo ""
 
 # ============================================================================
+# Cursor hooks (hooks.json merge + hooks/ symlink)
+# ============================================================================
+
+CURSOR_HOOKS_JSON_SRC="$REPO/configs/cursor/hooks.json"
+CURSOR_HOOKS_JSON_DEST="$HOME/.cursor/hooks.json"
+CURSOR_HOOKS_SRC="$REPO/configs/cursor/hooks"
+CURSOR_HOOKS_DEST="$HOME/.cursor/hooks"
+
+if [ -f "$CURSOR_HOOKS_JSON_SRC" ]; then
+  info "Merging Cursor hooks.json..."
+
+  if [ -f "$CURSOR_HOOKS_JSON_DEST" ]; then
+    cp "$CURSOR_HOOKS_JSON_DEST" "$CURSOR_HOOKS_JSON_DEST.backup.$TIMESTAMP"
+    merged=$(jq -n \
+      "$(cat "$CURSOR_HOOKS_JSON_DEST") * $(cat "$CURSOR_HOOKS_JSON_SRC")")
+    echo "$merged" | jq . > "$CURSOR_HOOKS_JSON_DEST"
+    success "Merged hooks.json (repo hooks win, user hooks preserved)"
+  else
+    cp "$CURSOR_HOOKS_JSON_SRC" "$CURSOR_HOOKS_JSON_DEST"
+    success "Created hooks.json"
+  fi
+else
+  warn "configs/cursor/hooks.json not found, skipping"
+fi
+
+if [ -d "$CURSOR_HOOKS_SRC" ]; then
+  info "Setting up Cursor hook scripts..."
+
+  if [ -L "$CURSOR_HOOKS_DEST" ]; then
+    resolved="$(readlink -f "$CURSOR_HOOKS_DEST")"
+    case "$resolved" in
+      "$REPO"|"$REPO"/*)
+        success "Hook scripts already symlinked"
+        ;;
+      *)
+        warn "$CURSOR_HOOKS_DEST is a symlink outside this repo, skipping"
+        ;;
+    esac
+  elif [ -d "$CURSOR_HOOKS_DEST" ] && [ ! -L "$CURSOR_HOOKS_DEST" ]; then
+    warn "$CURSOR_HOOKS_DEST is a real directory (not symlink)"
+    warn "Skipping — to use repo hooks, manually merge or:"
+    warn "  mv $CURSOR_HOOKS_DEST $CURSOR_HOOKS_DEST.local"
+    warn "  ln -s $CURSOR_HOOKS_SRC $CURSOR_HOOKS_DEST"
+  else
+    rm -f "$CURSOR_HOOKS_DEST" 2>/dev/null || true
+    ln -s "$CURSOR_HOOKS_SRC" "$CURSOR_HOOKS_DEST"
+    success "Symlinked Cursor hook scripts"
+  fi
+
+  chmod +x "$CURSOR_HOOKS_SRC"/*.sh 2>/dev/null || true
+else
+  warn "configs/cursor/hooks/ not found, skipping"
+fi
+
+echo ""
+
+# ============================================================================
 # Cursor rules (symlink entire rules/ dir)
 # ============================================================================
 
@@ -75,19 +132,18 @@ if [ -d "$CURSOR_RULES_SRC" ]; then
     resolved="$(readlink -f "$CURSOR_RULES_DEST")"
     case "$resolved" in
       "$REPO"|"$REPO"/*)
-        error "$CURSOR_RULES_DEST is already a symlink into this repo"
+        success "Cursor rules already symlinked"
+        ;;
+      *)
+        error "$CURSOR_RULES_DEST is a symlink outside this repo"
         ;;
     esac
-  fi
-
-  # Symlink (replaces old dir if exists, but only if safe)
-  if [ -d "$CURSOR_RULES_DEST" ] && [ ! -L "$CURSOR_RULES_DEST" ]; then
+  elif [ -d "$CURSOR_RULES_DEST" ] && [ ! -L "$CURSOR_RULES_DEST" ]; then
     warn "$CURSOR_RULES_DEST is a real directory (not symlink)"
     warn "Skipping — to use repo rules, manually merge or:"
     warn "  mv $CURSOR_RULES_DEST $CURSOR_RULES_DEST.local"
     warn "  ln -s $CURSOR_RULES_SRC $CURSOR_RULES_DEST"
   else
-    # Safe to symlink
     rm -f "$CURSOR_RULES_DEST" 2>/dev/null || true
     ln -s "$CURSOR_RULES_SRC" "$CURSOR_RULES_DEST"
     success "Symlinked Cursor rules"
@@ -101,5 +157,6 @@ success "Config sync complete"
 echo ""
 echo "Next:"
 echo "  - Review ~/.claude/settings.json if needed"
+echo "  - Review ~/.cursor/hooks.json if needed"
 echo "  - Review ~/.cursor/rules/ if needed"
 echo ""
