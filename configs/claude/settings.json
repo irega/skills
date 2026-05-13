@@ -1,7 +1,4 @@
 {
-  "model": "opus",
-  "effortLevel": "medium",
-  "enabledPlugins": {
-    "irega-skills": true
-  }
+  "model": "haiku",
+  "effortLevel": "medium"
 }
