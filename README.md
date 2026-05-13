@@ -22,7 +22,7 @@ Skills auto-available in Claude Code + Cursor.
 - **caveman** — Ultra-compressed prose. Cuts ~75% tokens, full accuracy.
 
 ### Engineering
-- (coming soon)
+- **tdd** — Test-driven development with red-green-refactor loop
 
 ## Structure
 
