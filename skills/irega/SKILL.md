@@ -1,9 +1,9 @@
 ---
-name: ivan-reinoso-garcia
-description: Iván Reinoso García's coding philosophy, conventions, and preferred approaches.
+name: irega
+description: irega's coding philosophy, conventions, and preferred approaches.
 ---
 
-# Iván Reinoso García — Development Philosophy
+# irega — Development Philosophy
 
 *Personal conventions and preferences. Scaffolding — to be filled in.*
 
