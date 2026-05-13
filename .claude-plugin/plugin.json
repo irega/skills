@@ -2,6 +2,7 @@
   "name": "irega-skills",
   "skills": [
     "./skills/irega",
-    "./skills/productivity/caveman"
+    "./skills/productivity/caveman",
+    "./skills/engineering/tdd"
   ]
 }
