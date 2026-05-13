@@ -24,4 +24,4 @@
 
 - Skills are composable — they reference each other via docs, not code duplication
 - Each skill owns one behavior; keeps scope tight
-- Personal skill (`ivan/`) documents *why* I prefer certain approaches, not just *what*
+- Personal skill (`irega/`) documents *why* I prefer certain approaches, not just *what*

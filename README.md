@@ -6,7 +6,7 @@ Personal skills, configs, and conventions for Claude Code and Cursor.
 
 ```bash
 # Clone and install
-git clone git@github-personal:irega/skills.git ~/dev/skills
+git clone git@github.com:irega/skills.git ~/dev/skills
 cd ~/dev/skills
 ./scripts/install.sh
 ```
@@ -15,19 +15,18 @@ Skills auto-available in Claude Code + Cursor.
 
 ## Skills
 
-### Engineering
-- **ivan** — How I like to code (stack, patterns, testing approach)
+### Personal
+- **irega** — Coding philosophy, conventions, and preferred approaches
 
-### Productivity
+### Engineering
 - (coming soon)
 
 ## Structure
 
 ```
 skills/
-├── ivan/              # Personal skill: my dev approach
-├── engineering/       # Reusable technical skills
-└── productivity/      # Workflow / non-code skills
+├── irega/             # Personal skill: my dev approach
+└── engineering/       # Reusable technical skills
 
 configs/
 ├── claude/            # Claude Code templates
@@ -36,9 +35,9 @@ configs/
 
 ## What's a skill?
 
-Markdown file with YAML frontmatter. Loaded by `/ivan`, `/commit`, etc. in Claude Code and Cursor.
+Markdown file with YAML frontmatter. Invoked via `/irega` or auto-triggered by the agent in Claude Code and Cursor.
 
-See `skills/ivan/SKILL.md` for structure.
+See `skills/irega/SKILL.md` for structure.
 
 ## Dev notes
 

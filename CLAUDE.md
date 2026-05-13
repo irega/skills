@@ -6,13 +6,13 @@ Skills repo for Claude Code and Cursor.
 
 Skills in `skills/` are categorized by bucket:
 
-- `ivan/` — Personal skill about how I code (stack, patterns, testing, conventions)
+- `irega/` — Personal skill about how I code (stack, patterns, testing, conventions)
 - `engineering/` — Technical reusable skills (TDD, code review, etc.)
 - `productivity/` — Workflow skills (handoff, planning, etc.)
 - `in-progress/` — Draft skills
 - `deprecated/` — Old skills, not promoted
 
-**Rule:** Only `ivan/`, `engineering/`, `productivity/` appear in top-level README and `plugin.json`. Others excluded.
+**Rule:** Only `irega/`, `engineering/`, `productivity/` appear in top-level README and `plugin.json`. Others excluded.
 
 ## Installation
 
