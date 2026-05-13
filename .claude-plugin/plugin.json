@@ -1,6 +1,7 @@
 {
   "name": "irega-skills",
   "skills": [
-    "./skills/irega"
+    "./skills/irega",
+    "./skills/productivity/caveman"
   ]
 }
