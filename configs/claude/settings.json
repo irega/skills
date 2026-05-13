@@ -1,0 +1,7 @@
+{
+  "model": "opus",
+  "effortLevel": "medium",
+  "enabledPlugins": {
+    "irega-skills": true
+  }
+}

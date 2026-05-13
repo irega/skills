@@ -35,8 +35,25 @@ Creates symlinks in `~/.claude/skills/` and `~/.cursor/skills/`.
 
 ## Configs
 
-`configs/` holds exportable settings:
-- `claude/settings.json` — Base Claude Code settings template
-- `cursor/rules/` — Cursor rule templates
+`configs/` holds base settings synced to your system:
 
-Not auto-installed; reference manually or via install script.
+- `claude/settings.json` — Claude Code settings (model, effort level, plugins)
+- `cursor/rules/` — Cursor rules (symlinked to `~/.cursor/rules/`)
+
+### Sync mechanism
+
+`scripts/sync-configs.sh` does **smart merge**:
+
+1. Reads `configs/claude/settings.json`
+2. Merges with `~/.claude/settings.json` (repo settings win, user hooks/plugins preserved)
+3. Backs up before changes
+4. Symlinks `configs/cursor/rules/` → `~/.cursor/rules/`
+
+Usage:
+```bash
+./scripts/sync-configs.sh
+```
+
+Or included in `./scripts/install.sh` (prompts user).
+
+**Why merge, not overwrite?** Preserves local customizations (hooks, additional plugins) while syncing shared base config.

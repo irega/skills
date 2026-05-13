@@ -39,8 +39,21 @@ Markdown file with YAML frontmatter. Invoked via `/irega` or auto-triggered by t
 
 See `skills/irega/SKILL.md` for structure.
 
+## Config Sync
+
+Base configs in `configs/` can be synced to your system:
+
+```bash
+./scripts/sync-configs.sh
+```
+
+**Smart merge** — reads from `configs/`, merges with existing `~/.claude/settings.json` without losing local customizations. Backs up before changes.
+
+See `scripts/sync-configs.sh` for details.
+
 ## Dev notes
 
 - Update `CLAUDE.md` when rules change
 - Plugin registered in `.claude-plugin/plugin.json`
-- Symlinks created by `scripts/link-skills.sh`
+- Skills symlinked via `scripts/link-skills.sh`
+- Configs synced via `scripts/sync-configs.sh`
