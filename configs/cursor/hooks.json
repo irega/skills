@@ -5,6 +5,12 @@
       {
         "command": "./hooks/caveman-start.sh"
       }
+    ],
+    "preToolUse": [
+      {
+        "command": "rtk hook cursor",
+        "matcher": "Shell"
+      }
     ]
   }
 }

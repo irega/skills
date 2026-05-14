@@ -5,6 +5,7 @@
     "./skills/productivity/caveman",
     "./skills/productivity/handoff",
     "./skills/productivity/write-a-skill",
-    "./skills/engineering/tdd"
+    "./skills/engineering/tdd",
+    "./skills/productivity/rtk-tools"
   ]
 }
