@@ -62,16 +62,17 @@ When creating a new skill, update these files in order:
 `configs/` holds base settings synced to your system:
 
 - `claude/settings.json` — Claude Code settings (model, effort level, plugins)
-- `cursor/rules/` — Cursor rules (symlinked to `~/.cursor/rules/`)
+- `cursor/rules/` — Cursor rules
+- `cursor/hooks.json` — Cursor hooks configuration
 
 ### Sync mechanism
 
-`scripts/sync-configs.sh` does **smart merge**:
+`scripts/sync-configs.sh` does **full overwrite** (repo is source of truth):
 
-1. Reads `configs/claude/settings.json`
-2. Merges with `~/.claude/settings.json` (repo settings win, user hooks/plugins preserved)
-3. Backs up before changes
-4. Symlinks `configs/cursor/rules/` → `~/.cursor/rules/`
+1. Backs up before changes (`~/.claude/settings.json`, `~/.cursor/rules/`, `~/.cursor/hooks.json`)
+2. Copies `configs/claude/settings.json` → `~/.claude/settings.json`
+3. Copies `configs/cursor/rules/` → `~/.cursor/rules/` (recursive)
+4. Copies `configs/cursor/hooks.json` → `~/.cursor/hooks.json`
 
 Usage:
 ```bash
@@ -80,4 +81,4 @@ Usage:
 
 Or included in `./scripts/install.sh` (prompts user).
 
-**Why merge, not overwrite?** Preserves local customizations (hooks, additional plugins) while syncing shared base config.
+**Why overwrite?** This repo is the source of truth for all configuration.

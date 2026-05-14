@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Sync configs from repo to ~/.claude and ~/.cursor with smart merge
+# Sync configs from repo to ~/.claude and ~/.cursor with full overwrite
 # - Reads from configs/
-# - Merges (not overwrites) with existing settings
+# - Overwrites all settings (repo is source of truth)
 # - Backs up before changes
 # - Cross-platform safe
 
@@ -35,7 +35,7 @@ CLAUDE_SRC="$REPO/configs/claude/settings.json"
 CLAUDE_DEST="$HOME/.claude/settings.json"
 
 if [ -f "$CLAUDE_SRC" ]; then
-  info "Merging Claude Code settings..."
+  info "Syncing Claude Code settings..."
 
   # Backup existing
   if [ -f "$CLAUDE_DEST" ]; then
@@ -43,17 +43,10 @@ if [ -f "$CLAUDE_SRC" ]; then
     info "Backed up to settings.json.backup.$TIMESTAMP"
   fi
 
-  # Merge: repo config wins for model/effortLevel, but preserve hooks/plugins user added
-  if [ -f "$CLAUDE_DEST" ]; then
-    # Merge strategy: take repo's model/effortLevel, keep user's hooks/plugins
-    merged=$(jq -n \
-      "$(cat "$CLAUDE_DEST") * $(cat "$CLAUDE_SRC")")
-    echo "$merged" | jq . > "$CLAUDE_DEST"
-    success "Merged settings (repo config + user hooks/plugins preserved)"
-  else
-    cp "$CLAUDE_SRC" "$CLAUDE_DEST"
-    success "Created new settings.json"
-  fi
+  # Overwrite with repo config
+  cp "$CLAUDE_SRC" "$CLAUDE_DEST"
+  jq . "$CLAUDE_DEST" > /dev/null  # Validate JSON
+  success "Synced settings.json (repo is source of truth)"
 else
   warn "configs/claude/settings.json not found, skipping"
 fi
@@ -70,47 +63,34 @@ CURSOR_HOOKS_SRC="$REPO/configs/cursor/hooks"
 CURSOR_HOOKS_DEST="$HOME/.cursor/hooks"
 
 if [ -f "$CURSOR_HOOKS_JSON_SRC" ]; then
-  info "Merging Cursor hooks.json..."
+  info "Syncing Cursor hooks.json..."
 
   if [ -f "$CURSOR_HOOKS_JSON_DEST" ]; then
     cp "$CURSOR_HOOKS_JSON_DEST" "$CURSOR_HOOKS_JSON_DEST.backup.$TIMESTAMP"
-    merged=$(jq -n \
-      "$(cat "$CURSOR_HOOKS_JSON_DEST") * $(cat "$CURSOR_HOOKS_JSON_SRC")")
-    echo "$merged" | jq . > "$CURSOR_HOOKS_JSON_DEST"
-    success "Merged hooks.json (repo hooks win, user hooks preserved)"
-  else
-    cp "$CURSOR_HOOKS_JSON_SRC" "$CURSOR_HOOKS_JSON_DEST"
-    success "Created hooks.json"
+    info "Backed up to hooks.json.backup.$TIMESTAMP"
   fi
+
+  # Overwrite with repo config
+  cp "$CURSOR_HOOKS_JSON_SRC" "$CURSOR_HOOKS_JSON_DEST"
+  jq . "$CURSOR_HOOKS_JSON_DEST" > /dev/null  # Validate JSON
+  success "Synced hooks.json (repo is source of truth)"
 else
   warn "configs/cursor/hooks.json not found, skipping"
 fi
 
 if [ -d "$CURSOR_HOOKS_SRC" ]; then
-  info "Setting up Cursor hook scripts..."
+  info "Syncing Cursor hook scripts..."
 
-  if [ -L "$CURSOR_HOOKS_DEST" ]; then
-    resolved="$(readlink -f "$CURSOR_HOOKS_DEST")"
-    case "$resolved" in
-      "$REPO"|"$REPO"/*)
-        success "Hook scripts already symlinked"
-        ;;
-      *)
-        warn "$CURSOR_HOOKS_DEST is a symlink outside this repo, skipping"
-        ;;
-    esac
-  elif [ -d "$CURSOR_HOOKS_DEST" ] && [ ! -L "$CURSOR_HOOKS_DEST" ]; then
-    warn "$CURSOR_HOOKS_DEST is a real directory (not symlink)"
-    warn "Skipping — to use repo hooks, manually merge or:"
-    warn "  mv $CURSOR_HOOKS_DEST $CURSOR_HOOKS_DEST.local"
-    warn "  ln -s $CURSOR_HOOKS_SRC $CURSOR_HOOKS_DEST"
-  else
-    rm -f "$CURSOR_HOOKS_DEST" 2>/dev/null || true
-    ln -s "$CURSOR_HOOKS_SRC" "$CURSOR_HOOKS_DEST"
-    success "Symlinked Cursor hook scripts"
+  # Backup existing
+  if [ -d "$CURSOR_HOOKS_DEST" ]; then
+    mv "$CURSOR_HOOKS_DEST" "$CURSOR_HOOKS_DEST.backup.$TIMESTAMP"
+    info "Backed up to hooks.backup.$TIMESTAMP"
   fi
 
-  chmod +x "$CURSOR_HOOKS_SRC"/*.sh 2>/dev/null || true
+  # Copy hooks directory
+  cp -r "$CURSOR_HOOKS_SRC" "$CURSOR_HOOKS_DEST"
+  chmod +x "$CURSOR_HOOKS_DEST"/*.sh 2>/dev/null || true
+  success "Synced Cursor hook scripts (repo is source of truth)"
 else
   warn "configs/cursor/hooks/ not found, skipping"
 fi
@@ -118,36 +98,24 @@ fi
 echo ""
 
 # ============================================================================
-# Cursor rules (symlink entire rules/ dir)
+# Cursor rules (copy entire rules/ dir)
 # ============================================================================
 
 CURSOR_RULES_SRC="$REPO/configs/cursor/rules"
 CURSOR_RULES_DEST="$HOME/.cursor/rules"
 
 if [ -d "$CURSOR_RULES_SRC" ]; then
-  info "Setting up Cursor rules..."
+  info "Syncing Cursor rules..."
 
-  # If dest is a symlink into this repo, bail (would create loop)
-  if [ -L "$CURSOR_RULES_DEST" ]; then
-    resolved="$(readlink -f "$CURSOR_RULES_DEST")"
-    case "$resolved" in
-      "$REPO"|"$REPO"/*)
-        success "Cursor rules already symlinked"
-        ;;
-      *)
-        error "$CURSOR_RULES_DEST is a symlink outside this repo"
-        ;;
-    esac
-  elif [ -d "$CURSOR_RULES_DEST" ] && [ ! -L "$CURSOR_RULES_DEST" ]; then
-    warn "$CURSOR_RULES_DEST is a real directory (not symlink)"
-    warn "Skipping — to use repo rules, manually merge or:"
-    warn "  mv $CURSOR_RULES_DEST $CURSOR_RULES_DEST.local"
-    warn "  ln -s $CURSOR_RULES_SRC $CURSOR_RULES_DEST"
-  else
-    rm -f "$CURSOR_RULES_DEST" 2>/dev/null || true
-    ln -s "$CURSOR_RULES_SRC" "$CURSOR_RULES_DEST"
-    success "Symlinked Cursor rules"
+  # Backup existing
+  if [ -d "$CURSOR_RULES_DEST" ]; then
+    mv "$CURSOR_RULES_DEST" "$CURSOR_RULES_DEST.backup.$TIMESTAMP"
+    info "Backed up to rules.backup.$TIMESTAMP"
   fi
+
+  # Copy rules directory
+  cp -r "$CURSOR_RULES_SRC" "$CURSOR_RULES_DEST"
+  success "Synced Cursor rules (repo is source of truth)"
 else
   warn "configs/cursor/rules/ not found, skipping"
 fi
