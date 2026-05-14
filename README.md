@@ -31,7 +31,8 @@ Skills auto-available in Claude Code + Cursor.
 ```
 skills/
 ├── irega/             # Personal skill: my dev approach
-└── engineering/       # Reusable technical skills
+├── engineering/       # Reusable technical skills
+└── productivity/      # Workflow and efficiency skills
 
 configs/
 ├── claude/            # Claude Code templates
