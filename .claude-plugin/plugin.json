@@ -4,6 +4,7 @@
     "./skills/irega",
     "./skills/productivity/caveman",
     "./skills/productivity/handoff",
+    "./skills/productivity/write-a-skill",
     "./skills/engineering/tdd"
   ]
 }
