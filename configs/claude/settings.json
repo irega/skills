@@ -4,23 +4,7 @@
   "hooks": {
     "SessionStart": [
       {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "echo 'use caveman mode'"
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "rtk hook claude"
-          }
-        ]
+        "hooks": [{ "type": "command", "command": "echo 'use caveman mode'" }]
       }
     ]
   }
