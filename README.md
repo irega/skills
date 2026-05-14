@@ -4,6 +4,12 @@ Personal skills, configs, and conventions for Claude Code and Cursor.
 
 ## Quick Install
 
+**Prerequisites:** Install [RTK](https://github.com/rtk-ai/rtk) before running the install script.
+
+```bash
+brew install rtk  # or equivalent for your platform
+```
+
 ```bash
 # Clone and install
 git clone git@github.com:irega/skills.git ~/dev/skills
@@ -11,7 +17,12 @@ cd ~/dev/skills
 ./scripts/install.sh
 ```
 
-Skills auto-available in Claude Code + Cursor.
+The install script:
+1. Symlinks skills to `~/.claude/skills/` and `~/.cursor/skills/`
+2. Runs `rtk init -g` — sets up RTK.md, filters.toml, and `@RTK.md` in global CLAUDE.md
+3. Optionally syncs configs (Claude settings + Cursor hooks) from `configs/`
+
+Skills auto-available in Claude Code + Cursor. RTK active on all Bash/Shell tool calls.
 
 ## Skills
 

@@ -16,9 +16,9 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 
 error() { echo -e "${RED}error: $*${NC}" >&2; exit 1; }
-success() { echo -e "${GREEN}✅ $*${NC}"; }
-warn() { echo -e "${YELLOW}⚠️  $*${NC}"; }
-info() { echo -e "${BLUE}ℹ️  $*${NC}"; }
+success() { echo -e "${GREEN}$*${NC}"; }
+warn() { echo -e "${YELLOW}WARNING: $*${NC}"; }
+info() { echo -e "${BLUE}$*${NC}"; }
 
 echo "Cleaning config backups..."
 echo ""

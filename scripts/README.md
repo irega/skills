@@ -6,15 +6,22 @@ Automation scripts for setup and config management.
 
 One-time setup for fresh clone. Runs all initialization steps.
 
+**Prerequisite:** RTK must be installed before running.
+```bash
+brew install rtk
+```
+
 ```bash
 ./scripts/install.sh
 ```
 
 **What it does:**
-- Creates `~/.claude/skills/` and `~/.cursor/skills/` if needed
-- Symlinks all skills from `skills/` to system skill dirs
-- Syncs base configs from `configs/` to system config dirs
-- Prompts before each step
+1. Symlinks all skills from `skills/` to `~/.claude/skills/` and `~/.cursor/skills/`
+2. Runs `rtk init -g --auto-patch` — creates `filters.toml`, `RTK.md`, and adds `@RTK.md` to global CLAUDE.md
+3. Runs `rtk init -g --agent cursor --auto-patch` — wires RTK into Cursor agent hooks
+4. Optionally syncs configs from `configs/` (full overwrite — repo is source of truth)
+
+**Order matters:** RTK init runs before `sync-configs.sh` so that `settings.json` and `hooks.json` end up with the repo versions (which already include the RTK hooks), not the ones RTK patches.
 
 **When to use:** After cloning the repo for the first time.
 
@@ -96,6 +103,7 @@ DRY_RUN=1 ./scripts/clean-config-backups.sh
 
 **Fresh install:**
 ```bash
+brew install rtk
 git clone git@github.com:irega/skills.git ~/dev/skills
 cd ~/dev/skills
 ./scripts/install.sh

@@ -17,9 +17,9 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 error() { echo -e "${RED}error: $*${NC}" >&2; exit 1; }
-success() { echo -e "${GREEN}✅ $*${NC}"; }
-warn() { echo -e "${YELLOW}⚠️  $*${NC}"; }
-info() { echo -e "ℹ️  $*"; }
+success() { echo -e "${GREEN}$*${NC}"; }
+warn() { echo -e "${YELLOW}WARNING: $*${NC}"; }
+info() { echo "$*"; }
 
 # Check jq available
 command -v jq >/dev/null || error "jq required. Install: brew install jq"
