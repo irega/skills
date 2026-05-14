@@ -5,42 +5,14 @@ description: irega's coding philosophy, conventions, and preferred approaches.
 
 # irega — Development Philosophy
 
-*Personal conventions and preferences. Scaffolding — to be filled in.*
+Personal conventions, philosophy, and practices for writing maintainable, incremental software.
 
-## Stack
+## Quick Links
 
-(To be defined)
+- **[[stack]]** — Languages, runtimes, and tools
+- **[[testing]]** — Testing philosophy and practices  
+- **[[git-workflow]]** — Commit, PR, and branching conventions
+- **[[patterns]]** — Architectural and code patterns
+- **[[code-style]]** — Naming, organization, and design principles
+- **[[red-flags]]** — What not to do
 
-## Principles
-
-### Code
-
-(To be defined)
-
-### Testing
-
-(To be defined)
-
-### Workflows
-
-(To be defined)
-
-## Preferences
-
-(To be defined)
-
-## Red flags
-
-(To be defined)
-
----
-
-## Structure
-
-Expand this skill with linked docs:
-- `stack.md` — languages, frameworks, tools
-- `testing.md` — testing philosophy and practices
-- `git-workflow.md` — commit, PR, branching conventions
-- `patterns.md` — architectural and code patterns
-- `code-style.md` — naming, organization, design principles
-- `red-flags.md` — what not to do
