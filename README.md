@@ -20,6 +20,7 @@ Skills auto-available in Claude Code + Cursor.
 
 ### Productivity
 - **caveman** — Ultra-compressed prose. Cuts ~75% tokens, full accuracy.
+- **handoff** — Compact current conversation into handoff doc for next agent to pick up.
 
 ### Engineering
 - **tdd** — Test-driven development with red-green-refactor loop

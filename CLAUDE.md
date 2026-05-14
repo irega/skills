@@ -39,21 +39,23 @@ When creating a new skill, update these files in order:
 
 1. **Create skill folder** — `skills/{bucket}/skill-name/`
 2. **Add skill.json** — Metadata file with name, description, version
-3. **Update README.md** — Add entry to appropriate section if skill is in `irega/`, `engineering/`, or `productivity/`
-4. **Update plugin.json** — Add skill entry if public (not `in-progress/` or `deprecated/`)
-5. **Link scripts** — Run `./scripts/link-skills.sh` to create symlinks
-6. **Test installation** — Verify skill appears in Claude Code/Cursor
+3. **Update bucket README** — Add entry to `skills/{bucket}/README.md` if public
+4. **Update root README** — Add entry to top-level README.md under correct section if public (not `in-progress/` or `deprecated/`)
+5. **Update plugin.json** — Add skill entry if public (not `in-progress/` or `deprecated/`)
+6. **Link scripts** — Run `./scripts/link-skills.sh` to create symlinks
+7. **Test installation** — Verify skill appears in Claude Code/Cursor
 
 **Checklist template:**
 ```
-- [ ] Skill folder created with skill.json
-- [ ] README.md updated (if public bucket)
+- [ ] Skill folder created with SKILL.md
+- [ ] Bucket README updated (skills/{bucket}/README.md)
+- [ ] Root README updated (top-level README.md)
 - [ ] plugin.json updated (if public bucket)
 - [ ] Scripts run and symlinks created
 - [ ] Plugin loads in Claude Code / Cursor
 ```
 
-**Why checklist?** Skills are discoverable via docs and plugin system — missing updates means skill exists but is invisible.
+**Why checklist?** Docs and plugin system must stay in sync — missing updates means skill exists but users can't discover it.
 
 ## Configs
 

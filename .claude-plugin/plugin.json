@@ -3,6 +3,7 @@
   "skills": [
     "./skills/irega",
     "./skills/productivity/caveman",
+    "./skills/productivity/handoff",
     "./skills/engineering/tdd"
   ]
 }
