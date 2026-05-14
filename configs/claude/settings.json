@@ -2,6 +2,10 @@
   "model": "haiku",
   "effortLevel": "medium",
   "hooks": {
-    "on-session-start": "/caveman"
+    "SessionStart": [
+      {
+        "hooks": [{ "type": "command", "command": "echo 'use caveman mode'" }]
+      }
+    ]
   }
 }
