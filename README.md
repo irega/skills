@@ -74,3 +74,9 @@ Full docs: [`scripts/README.md`](scripts/README.md)
 - Update `CLAUDE.md` when rules change
 - Plugin registered in `.claude-plugin/plugin.json`
 - See [`scripts/README.md`](scripts/README.md) for script details
+
+## Inspiration
+
+Built with inspiration from:
+- [saski/augmentedcode-configuration](https://github.com/saski/augmentedcode-configuration)
+- [mattpocock/skills](https://github.com/mattpocock/skills)
