@@ -36,6 +36,7 @@ Skills auto-available in Claude Code + Cursor. RTK active on all Bash/Shell tool
 
 ### Engineering
 - **tdd** — Test-driven development with red-green-refactor loop
+- **pr-description** — Generate PR descriptions from template and git changes, with Jira ticket extraction
 
 ## Structure
 

@@ -38,7 +38,7 @@ Creates symlinks in `~/.claude/skills/` and `~/.cursor/skills/`.
 When creating a new skill, update these files in order:
 
 1. **Create skill folder** — `skills/{bucket}/skill-name/`
-2. **Add skill.json** — Metadata file with name, description, version
+2. **Add SKILL.md** — Main skill instructions with frontmatter
 3. **Update bucket README** — Add entry to `skills/{bucket}/README.md` if public
 4. **Update root README** — Add entry to top-level README.md under correct section if public (not `in-progress/` or `deprecated/`)
 5. **Update plugin.json** — Add skill entry if public (not `in-progress/` or `deprecated/`)
@@ -51,8 +51,8 @@ When creating a new skill, update these files in order:
 - [ ] Bucket README updated (skills/{bucket}/README.md)
 - [ ] Root README updated (top-level README.md)
 - [ ] plugin.json updated (if public bucket)
-- [ ] Scripts run and symlinks created
-- [ ] Plugin loads in Claude Code / Cursor
+- [ ] Link scripts run (symlinks created)
+- [ ] Skill loads in Claude Code / Cursor
 ```
 
 **Why checklist?** Docs and plugin system must stay in sync — missing updates means skill exists but users can't discover it.
