@@ -174,12 +174,26 @@ if [ -f "$CLAUDE_MCP_SRC" ] && command -v claude >/dev/null; then
     COMMAND=$(jq -r ".mcpServers[\"$SERVER\"].command" "$CLAUDE_MCP_SRC")
     ARGS=$(jq -r ".mcpServers[\"$SERVER\"].args[]" "$CLAUDE_MCP_SRC")
 
+    # Build env flags from .env.local if present
+    ENV_FLAGS=""
+    if [ -f "$ENV_LOCAL" ]; then
+      while IFS='=' read -r key value; do
+        # Skip comments and empty lines
+        [[ "$key" =~ ^#.*$ || -z "$key" ]] && continue
+        # Remove leading/trailing whitespace
+        value=$(echo "$value" | xargs)
+        if [ -n "$value" ]; then
+          ENV_FLAGS="$ENV_FLAGS -e $key=$value"
+        fi
+      done < "$ENV_LOCAL"
+    fi
+
     # Remove existing registration (idempotent)
     claude mcp remove "$SERVER" --scope user 2>/dev/null || true
 
-    # Re-add with current config
+    # Re-add with current config and env vars
     # shellcheck disable=SC2086
-    claude mcp add "$SERVER" --scope user -- $COMMAND $ARGS
+    claude mcp add "$SERVER" --scope user $ENV_FLAGS -- $COMMAND $ARGS
     info "  Registered: $SERVER"
   done
 
