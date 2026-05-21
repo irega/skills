@@ -121,11 +121,12 @@ else
 fi
 
 # ============================================================================
-# Cursor mcp.json
+# Cursor mcp.json + token injection
 # ============================================================================
 
 CURSOR_MCP_SRC="$REPO/configs/cursor/mcp.json"
 CURSOR_MCP_DEST="$HOME/.cursor/mcp.json"
+ENV_LOCAL="$REPO/.env.local"
 
 if [ -f "$CURSOR_MCP_SRC" ]; then
   info "Syncing Cursor mcp.json..."
@@ -136,6 +137,18 @@ if [ -f "$CURSOR_MCP_SRC" ]; then
   fi
 
   cp "$CURSOR_MCP_SRC" "$CURSOR_MCP_DEST"
+
+  # Inject Playwright token from .env.local if present
+  if [ -f "$ENV_LOCAL" ]; then
+    PLAYWRIGHT_TOKEN=$(grep -E "^PLAYWRIGHT_MCP_EXTENSION_TOKEN=" "$ENV_LOCAL" | cut -d'=' -f2- | tr -d ' ')
+    if [ -n "$PLAYWRIGHT_TOKEN" ]; then
+      # Set env.PLAYWRIGHT_MCP_EXTENSION_TOKEN in mcpServers.playwright
+      jq ".mcpServers.playwright.env.PLAYWRIGHT_MCP_EXTENSION_TOKEN = \"$PLAYWRIGHT_TOKEN\"" "$CURSOR_MCP_DEST" > "$CURSOR_MCP_DEST.tmp"
+      mv "$CURSOR_MCP_DEST.tmp" "$CURSOR_MCP_DEST"
+      info "  Injected Playwright MCP token"
+    fi
+  fi
+
   jq . "$CURSOR_MCP_DEST" > /dev/null  # Validate JSON
   success "Synced mcp.json (repo is source of truth)"
 else

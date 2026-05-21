@@ -6,7 +6,8 @@
         "@playwright/mcp@latest",
         "--browser", "chrome",
         "--extension"
-      ]
+      ],
+      "env": {}
     }
   }
 }
