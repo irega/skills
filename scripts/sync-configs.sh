@@ -120,11 +120,69 @@ else
   warn "configs/cursor/rules/ not found, skipping"
 fi
 
+# ============================================================================
+# Cursor mcp.json
+# ============================================================================
+
+CURSOR_MCP_SRC="$REPO/configs/cursor/mcp.json"
+CURSOR_MCP_DEST="$HOME/.cursor/mcp.json"
+
+if [ -f "$CURSOR_MCP_SRC" ]; then
+  info "Syncing Cursor mcp.json..."
+
+  if [ -f "$CURSOR_MCP_DEST" ]; then
+    cp "$CURSOR_MCP_DEST" "$CURSOR_MCP_DEST.backup.$TIMESTAMP"
+    info "Backed up to mcp.json.backup.$TIMESTAMP"
+  fi
+
+  cp "$CURSOR_MCP_SRC" "$CURSOR_MCP_DEST"
+  jq . "$CURSOR_MCP_DEST" > /dev/null  # Validate JSON
+  success "Synced mcp.json (repo is source of truth)"
+else
+  warn "configs/cursor/mcp.json not found, skipping"
+fi
+
+echo ""
+
+# ============================================================================
+# Claude Code MCP servers (registered via CLI → writes to ~/.claude.json)
+# Source of truth: configs/cursor/mcp.json (shared between Claude & Cursor)
+# ============================================================================
+
+CLAUDE_MCP_SRC="$REPO/configs/cursor/mcp.json"
+
+if [ -f "$CLAUDE_MCP_SRC" ] && command -v claude >/dev/null; then
+  info "Syncing Claude Code MCP servers..."
+
+  # Parse server names from JSON
+  MCP_SERVERS=$(jq -r '.mcpServers | keys[]' "$CLAUDE_MCP_SRC")
+
+  for SERVER in $MCP_SERVERS; do
+    COMMAND=$(jq -r ".mcpServers[\"$SERVER\"].command" "$CLAUDE_MCP_SRC")
+    ARGS=$(jq -r ".mcpServers[\"$SERVER\"].args[]" "$CLAUDE_MCP_SRC")
+
+    # Remove existing registration (idempotent)
+    claude mcp remove "$SERVER" --scope user 2>/dev/null || true
+
+    # Re-add with current config
+    # shellcheck disable=SC2086
+    claude mcp add "$SERVER" --scope user -- $COMMAND $ARGS
+    info "  Registered: $SERVER"
+  done
+
+  success "Synced Claude Code MCP servers (repo is source of truth)"
+else
+  [ ! -f "$CLAUDE_MCP_SRC" ] && warn "configs/cursor/mcp.json not found, skipping Claude MCP sync"
+  ! command -v claude >/dev/null && warn "'claude' CLI not found, skipping Claude MCP sync"
+fi
+
 echo ""
 success "Config sync complete"
 echo ""
 echo "Next:"
 echo "  - Review ~/.claude/settings.json if needed"
 echo "  - Review ~/.cursor/hooks.json if needed"
+echo "  - Review ~/.cursor/mcp.json if needed"
 echo "  - Review ~/.cursor/rules/ if needed"
+echo "  - Restart Claude Code to pick up new MCP servers"
 echo ""
