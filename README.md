@@ -24,6 +24,12 @@ The install script:
 
 Skills auto-available in Claude Code + Cursor. RTK active on all Bash/Shell tool calls.
 
+## Configuration
+
+Optional setup for enhanced features:
+
+- **[Playwright MCP](configs/cursor/README.md#playwright-mcp-server)** — Browser automation with Chrome extension token setup
+
 ## Skills
 
 ### Personal
