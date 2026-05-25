@@ -7,7 +7,11 @@ description: Commit, PR, and branching conventions
 
 ## Commits
 
-- **Conventional Commits** — All commits follow the standard format (`feat:`, `fix:`, `refactor:`, `docs:`, etc.).
+- **Conventional Commits** — Format: `type(TICKET): description`
+  - `type` = `feat` | `fix` | `refactor` | `docs` | `chore` | `test`
+  - `TICKET` = Jira ticket inferred from branch name (e.g. branch `EB-323484` → scope `EB-323484`)
+  - Example: `feat(EB-323484): add venue scope prompt`
+  - Omit scope only when branch name has no recognizable ticket pattern (e.g. `main`, `hotfix-login`, `ivan/experiment`)
 - **Small commits** — Each commit represents a logical, deployable unit of work.
 - **Incremental deployment** — Commits small enough to deploy independently; feedback informs next steps.
 
