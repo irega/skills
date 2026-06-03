@@ -35,3 +35,9 @@ Reusable technical skills for code work.
   - Evaluates engineering reasoning, not just correctness
   - Ideal for validating design decisions before building or reviewing proposals
   - See `staff-review/SKILL.md` and `staff-review/rubric.md` for details
+
+- **planning** — Specification-driven feature planning with OpenSpec
+  - Orchestrates propose → design → implement → review lifecycle
+  - Ties `/staff-review`, `/tdd`, `/code-review`, `/pr-description` into a single flow
+  - Uses OpenSpec (`/opsx:*` commands) for structured change tracking
+  - See `planning/SKILL.md` for details

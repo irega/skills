@@ -9,6 +9,7 @@
     "./skills/engineering/pr-description",
     "./skills/engineering/code-review",
     "./skills/engineering/security-audit",
-    "./skills/engineering/staff-review"
+    "./skills/engineering/staff-review",
+    "./skills/engineering/planning"
   ]
 }

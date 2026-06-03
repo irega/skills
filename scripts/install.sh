@@ -13,7 +13,19 @@ bash "$REPO/scripts/link-skills.sh"
 
 echo ""
 
-# 2. RTK setup (creates filters.toml + RTK.md + @RTK.md in global CLAUDE.md)
+# 2. OpenSpec
+if command -v npm &>/dev/null; then
+  echo "Installing OpenSpec..."
+  npm install -g @fission-ai/openspec@latest
+  echo "OpenSpec installed. Run 'openspec init' inside each project to enable planning."
+else
+  echo "WARNING: npm not found. OpenSpec not installed."
+  echo "    Install Node.js first, then: npm install -g @fission-ai/openspec@latest"
+fi
+
+echo ""
+
+# 3. RTK setup (creates filters.toml + RTK.md + @RTK.md in global CLAUDE.md)
 #    Must run before sync-configs.sh so settings.json gets the repo version afterward.
 if command -v rtk &>/dev/null; then
   echo "Setting up RTK..."
@@ -27,7 +39,7 @@ fi
 
 echo ""
 
-# 3. Config sync (optional, ask user)
+# 4. Config sync (optional, ask user)
 #    Overwrites ~/.claude/settings.json and ~/.cursor/hooks.json with repo versions,
 #    which already include the RTK hooks.
 read -p "Sync configs (Claude/Cursor)? [y/N] " -n 1 -r

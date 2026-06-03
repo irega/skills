@@ -46,6 +46,7 @@ Optional setup for enhanced features:
 - **code-review** — Multi-axis code review (correctness, readability, architecture, security, performance)
 - **security-audit** — OWASP-focused security review and vulnerability detection
 - **staff-review** — Technical design and architectural judgment from Staff Engineer perspective
+- **planning** — Specification-driven feature planning (OpenSpec + `/tdd` + `/code-review` + `/pr-description`)
 
 ## Structure
 
