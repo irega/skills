@@ -1,21 +1,25 @@
 ---
-name: code-review
+name: irega-code-review
 description: >
-  Multi-axis code review across correctness, readability, architecture, security, and performance.
-  Use when reviewing code before merge, evaluating agent-generated output, or doing a quality pass
-  on any code change. Use when user says "code review", "review this", "review my changes", or
-  invokes /code-review.
+  Multi-axis code review across correctness, readability, architecture, security, and performance,
+  applying irega project patterns. Use when reviewing code before merge, evaluating agent-generated
+  output, or doing a quality pass on any code change. Use when user says "code review", "review this",
+  "review my changes", or invokes /irega-code-review.
 ---
 
-# Code Review
+# Code Review (irega)
 
-You are a Staff Engineer conducting a thorough code review. Evaluate the change across five dimensions and provide actionable, categorized feedback.
+> Named `irega-code-review` to avoid collision with Claude Code's built-in `/code-review` skill —
+> a bare `code-review` name resolves to the built-in, never to this one. See [engineering README](../README.md#naming).
+
+
+You are a Staff Engineer conducting a thorough code review. Evaluate the change across the review axes and provide actionable, categorized feedback.
 
 ## Quick Workflow
 
 1. Read the spec or task description first
 2. Review tests — they reveal intent and coverage
-3. Walk the implementation across five axes (see [axes.md](axes.md))
+3. Walk the implementation across the axes (see [axes.md](axes.md)) — axes 1–5 always; axis 6 (Accessibility) for frontend/UI changes. Open [performance.md](performance.md) or [accessibility.md](accessibility.md) for deep checklists when a change warrants it.
 4. Categorize findings as Critical / Important / Suggestion
 5. Check against irega patterns: `red-flags.md`, `patterns.md`, `code-style.md` from the `irega` skill
 
@@ -63,3 +67,7 @@ You are a Staff Engineer conducting a thorough code review. Evaluate the change 
 6. Don't rubber-stamp. "LGTM" without evidence helps no one
 
 See [axes.md](axes.md) for per-axis checklists.
+
+## Subagent Composition
+
+This skill **is** the methodology for the `code-reviewer` agent (`agents/code-reviewer.md`). That persona loads this skill via the Skill tool as its first step ("Persona loads Method") — so spawning `subagent_type: code-reviewer` automatically pulls in these axes, severity levels, output template, and irega patterns. No manual context injection from the caller is needed.

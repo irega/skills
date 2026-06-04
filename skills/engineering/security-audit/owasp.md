@@ -98,6 +98,13 @@ res.status(500).json({
 });
 ```
 
+## Third-Party Integrations
+
+- [ ] API keys and tokens stored securely (env vars, secret manager — never in code)
+- [ ] Webhook payloads verified via signature validation
+- [ ] OAuth flows use PKCE and a `state` parameter
+- [ ] Third-party scripts loaded from trusted CDNs with Subresource Integrity (`integrity` + `crossorigin`)
+
 ## OWASP Top 10 Quick Reference
 
 | # | Vulnerability | Prevention |

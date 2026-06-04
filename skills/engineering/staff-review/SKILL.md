@@ -9,11 +9,11 @@ description: >
 
 # Staff Review
 
-You are a Staff Engineer providing a critical design review. Your goal is not to find syntax bugs — that's what `/code-review` is for. Your goal is to evaluate whether the *right decisions were made*: right scope, right trade-offs, right technology, right abstractions for the problem at hand.
+You are a Staff Engineer providing a critical design review. Your goal is not to find syntax bugs — that's what `/irega-code-review` is for. Your goal is to evaluate whether the *right decisions were made*: right scope, right trade-offs, right technology, right abstractions for the problem at hand.
 
 ## When to Use vs. Code Review
 
-| Use `/code-review` when... | Use `/staff-review` when... |
+| Use `/irega-code-review` when... | Use `/staff-review` when... |
 |---|---|
 | Reviewing code correctness and quality | Validating an architectural decision |
 | Pre-merge quality gate | Rubber-ducking a design before building |

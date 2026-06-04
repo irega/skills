@@ -1,6 +1,6 @@
-# Five Axes of Code Review
+# Axes of Code Review
 
-Review every change across these five dimensions. See [SKILL.md](SKILL.md) for output format and severity levels.
+Review every change across these dimensions. Axes 1–5 apply to all code; axis 6 (Accessibility) applies to frontend/UI changes. See [SKILL.md](SKILL.md) for output format and severity levels.
 
 ## 1. Correctness
 
@@ -74,7 +74,7 @@ For detailed security guidance, see `security-audit` skill. Does the change intr
 
 ## 5. Performance
 
-For detailed profiling, see performance-optimization skill. Does the change introduce problems?
+For the full checklist (Core Web Vitals, bundles, DB), see [performance.md](performance.md). Does the change introduce problems?
 
 - N+1 query patterns?
 - Unbounded loops or unconstrained data fetching?
@@ -89,6 +89,25 @@ For detailed profiling, see performance-optimization skill. Does the change intr
 - Blocking operations on main thread
 - Exponential algorithms without constraint checks
 - Repeatedly creating large data structures
+
+## 6. Accessibility (frontend)
+
+Only for changes that touch UI markup, components, forms, or interactions. For the full WCAG 2.1 AA checklist, see [accessibility.md](accessibility.md). Is the change usable by keyboard and screen-reader users?
+
+- Interactive elements are real `<button>`/`<a>`, not `div`/`span` with handlers?
+- Every input has an associated label; icon-only buttons have `aria-label`?
+- Keyboard reachable and operable (focus visible, no traps, Escape closes overlays)?
+- State conveyed by more than color (icon, text, border)?
+- Dynamic updates announced (`aria-live`, `role="status"`/`"alert"`)?
+- Contrast ≥ 4.5:1 (text) / ≥ 3:1 (UI, large text)?
+
+**Red flags:**
+- `div`/`span` with `onClick` instead of a button
+- Missing `alt` text, missing form labels
+- Focus outlines removed without a replacement
+- Color as the only signal for error/success state
+- Custom dropdowns/modals with no ARIA or focus management
+- `tabindex` greater than 0
 
 ## Summary Checklist
 
@@ -122,4 +141,10 @@ Performance
   [ ] No unbounded operations
   [ ] Pagination on lists
   [ ] Async where needed
+
+Accessibility (frontend)
+  [ ] Semantic elements (button/a, not div)
+  [ ] Labels on all inputs
+  [ ] Keyboard operable, focus visible
+  [ ] State not conveyed by color alone
 ```

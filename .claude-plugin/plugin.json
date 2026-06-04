@@ -7,9 +7,14 @@
     "./skills/productivity/write-a-skill",
     "./skills/engineering/tdd",
     "./skills/engineering/pr-description",
-    "./skills/engineering/code-review",
+    "./skills/engineering/irega-code-review",
     "./skills/engineering/security-audit",
     "./skills/engineering/staff-review",
     "./skills/engineering/planning"
+  ],
+  "agents": [
+    "./agents/code-reviewer.md",
+    "./agents/security-auditor.md",
+    "./agents/test-engineer.md"
   ]
 }
