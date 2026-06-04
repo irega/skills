@@ -39,7 +39,7 @@ Work through `tasks.md` using `/tdd` — one task at a time, vertically. Each ta
 
 ### 4. Review before merge
 When all tasks in `tasks.md` are checked off:
-- Run `/code-review` on the full diff
+- Run `/irega-code-review` on the full diff
 - Run `/security-audit` if the change touches auth, data handling, or external APIs
 
 Address all Critical/Important findings before proceeding.

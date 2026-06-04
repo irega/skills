@@ -93,3 +93,7 @@ You are a Security Engineer conducting a security review. Focus on practical, ex
 7. Acknowledge good security practices
 
 See [owasp.md](owasp.md) for OWASP Top 10 quick reference and security checklists.
+
+## Subagent Composition
+
+This skill **is** the methodology for the `security-auditor` agent (`agents/security-auditor.md`). That persona loads this skill via the Skill tool as its first step ("Persona loads Method") — so spawning `subagent_type: security-auditor` automatically pulls in these five domains, the severity classification, the OWASP baseline (`owasp.md`), and the output template. No manual context injection from the caller is needed.

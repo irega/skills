@@ -43,10 +43,19 @@ Optional setup for enhanced features:
 ### Engineering
 - **tdd** — Test-driven development with red-green-refactor loop
 - **pr-description** — Generate PR descriptions from template and git changes, with Jira ticket extraction
-- **code-review** — Multi-axis code review (correctness, readability, architecture, security, performance)
+- **irega-code-review** — Multi-axis code review (correctness, readability, architecture, security, performance). Prefixed to avoid collision with Claude Code's built-in `/code-review` — see [engineering README](skills/engineering/README.md#naming).
 - **security-audit** — OWASP-focused security review and vulnerability detection
 - **staff-review** — Technical design and architectural judgment from Staff Engineer perspective
-- **planning** — Specification-driven feature planning (OpenSpec + `/tdd` + `/code-review` + `/pr-description`)
+- **planning** — Specification-driven feature planning (OpenSpec + `/tdd` + `/irega-code-review` + `/pr-description`)
+
+### Agents
+Specialist subagent personas. Invoke via `subagent_type` in the Agent tool, or composed by slash commands.
+
+- **code-reviewer** — Senior Staff Engineer for pre-merge code review
+- **security-auditor** — Security Engineer for OWASP-focused vulnerability detection
+- **test-engineer** — QA Engineer for test strategy and coverage analysis
+
+See [`agents/README.md`](agents/README.md) for orchestration patterns.
 
 ## Structure
 

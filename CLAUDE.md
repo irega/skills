@@ -37,6 +37,7 @@ Creates symlinks in `~/.claude/skills/` and `~/.cursor/skills/`.
 
 When creating a new skill, update these files in order:
 
+0. **Check for name collisions** — Skill names resolve globally, and Claude Code's **built-in skills win** over repo skills with the same name (a bare `code-review` loads the built-in, not ours — this is why our skill is `irega-code-review`). Before naming, check against the built-in skill list; on any collision, prefix with `irega-`. See [skills/engineering/README.md#naming](skills/engineering/README.md#naming).
 1. **Create skill folder** — `skills/{bucket}/skill-name/`
 2. **Add SKILL.md** — Main skill instructions with frontmatter
 3. **Update bucket README** — Add entry to `skills/{bucket}/README.md` if public
