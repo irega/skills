@@ -6,8 +6,12 @@ Settings synced to `~/.cursor/` via `./scripts/sync-configs.sh`.
 
 ### Prerequisites
 
-1. Install [Playwright Extension for Chrome](https://chromewebstore.google.com/detail/playwright-extension/mmlmfjhmonkocbjadbfplnigmagldckm) from Chrome Web Store
-2. Get your extension token (to skip connection dialog):
+1. Install Playwright:
+    ```bash
+     npm install -g @playwright/mcp@latest
+     ```
+2. Install [Playwright Extension for Chrome](https://chromewebstore.google.com/detail/playwright-extension/mmlmfjhmonkocbjadbfplnigmagldckm) from Chrome Web Store
+3. Get your extension token (to skip connection dialog):
    - Open Chrome DevTools (F12)
    - Look for "Playwright" in the top menu
    - Copy the displayed token
