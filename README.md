@@ -26,6 +26,10 @@ Skills auto-available in Claude Code + Cursor. RTK active on all Bash/Shell tool
 
 ## Configuration
 
+Included automatically via `./scripts/install.sh` → `sync-configs.sh`:
+
+- **Ponytail** — Lazy senior dev mode. Simplest solution that works: YAGNI, stdlib first, no unrequested abstractions. Auto-enabled.
+
 Optional setup for enhanced features:
 
 - **[Playwright MCP](configs/cursor/README.md#playwright-mcp-server)** — Browser automation with Chrome extension token setup
