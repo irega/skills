@@ -1,4 +1,6 @@
-# irega/skills
+# irega/skills — ARCHIVED
+
+> ⚠️ **This repository is archived.** Development has moved to [irega/ai-toolkit](https://github.com/irega/ai-toolkit). This repo has grown beyond its initial scope of skills alone and now includes broader AI infrastructure, tools, and configurations. Start there for new work.
 
 Personal skills, configs, and conventions for Claude Code and Cursor.
 
